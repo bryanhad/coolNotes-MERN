@@ -2,14 +2,19 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const {logger} = require('./middleware/logger')
+const errorHandler = require('./middleware/errorHandler')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const corsOptions = require('./config/corsOptions')
 const PORT = process.env.PORT || 3500
 
 // log every incoming request to logs dir in a reqLog.log file
 app.use(logger)
-
+app.use(cors(corsOptions))
 // middle ware to parse the incoming json from req, to a js object
 app.use(express.json())
-
+// parse cookie that the api receive from the req
+app.use(cookieParser())
 // fyi, app.use is a built in method by express to call a middleware. the function below is a middleware to get the css file inside the public folder, it basically will serve all static assets inside the public folder!
 app.use('/', express.static(path.join(__dirname, 'public')))
 
@@ -28,6 +33,9 @@ app.all('*', (req, res) => {
         res.type('txt').send('404 Not Found')
     }
 })
+
+// catches error, if there is an error, log the error to the logs dir in a errLog.log file
+app.use(errorHandler)
 
 app.listen(PORT, () => {
    console.log(`Server is running on port ${PORT}`)
