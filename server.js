@@ -1,9 +1,17 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const {logger} = require('./middleware/logger')
 const PORT = process.env.PORT || 3500
 
-app.use('/', express.static(path.join(__dirname, '/public')))
+// log every incoming request to logs dir in a reqLog.log file
+app.use(logger)
+
+// middle ware to parse the incoming json from req, to a js object
+app.use(express.json())
+
+// fyi, app.use is a built in method by express to call a middleware. the function below is a middleware to get the css file inside the public folder, it basically will serve all static assets inside the public folder!
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 // 
 app.use('/' , require('./routes/root'))
