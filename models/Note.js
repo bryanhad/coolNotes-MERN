@@ -22,7 +22,7 @@ const noteSchema = new Schema({
         default: false
     },
 },
-// timestampt is just a options in creating a schema, with timeStamps, mongoDB will automatically give us the createdAt and updatedAt to our schema
+// timestamps is just a options in creating a schema, with timeStamps, mongoDB will automatically give us the createdAt and updatedAt to our schema
 { timestamps: true }
 )
 
