@@ -22,8 +22,9 @@ app.use(cookieParser())
 // fyi, app.use is a built in method by express to call a middleware. the function below is a middleware to get the css file inside the public folder, it basically will serve all static assets inside the public folder!
 app.use('/', express.static(path.join(__dirname, 'public')))
 
-// 
 app.use('/' , require('./routes/root'))
+// routes for users end point
+app.use('/users', require('./routes/userRoutes'))
 
 // catch all route, basically a 404 page..
 // app.all() is a function to route all types of http requests e.g. post,get,put,delete,etc.. we use path '*' to accept all paths that a user may request to

@@ -10,7 +10,7 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    role: [{
+    roles: [{
         type: String,
         default: 'Employee'
     }],
