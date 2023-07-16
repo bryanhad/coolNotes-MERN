@@ -9,7 +9,7 @@ const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const connectDB = require('./config/dbConn')
 const mongoose = require('mongoose')
-const PORT = process.env.PORT || 3500
+const PORT = process.env.PORT || 3100
 
 connectDB()
 // log every incoming request to logs dir in a reqLog.log file
@@ -23,8 +23,10 @@ app.use(cookieParser())
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 app.use('/' , require('./routes/root'))
-// routes for users end point
+// route for users end point
 app.use('/users', require('./routes/userRoutes'))
+// route for notes end point
+app.use('/notes', require('./routes/noteRoutes'))
 
 // catch all route, basically a 404 page..
 // app.all() is a function to route all types of http requests e.g. post,get,put,delete,etc.. we use path '*' to accept all paths that a user may request to
